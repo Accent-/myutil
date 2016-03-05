@@ -2,24 +2,41 @@ import json
 from twitter import *
 import csv
 
+
+"""
+key_file requires Twitter 4 tokens
+(access_token, access_token_secret, consumer_key, consumer_key_secret)
+"""
 def connect_twitter(key_file):
     with open(key_file) as f:
         secretjson = json.load(f)
 
-    t = Twitter(auth = OAuth(secretjson["access_token"], secretjson["access_token_secret"], secretjson["consumer_key"], secretjson["consumer_key_secret"]))
+    t = Twitter(auth = OAuth(secretjson["access_token"], 
+                             secretjson["access_token_secret"], 
+                             secretjson["consumer_key"], 
+                             secretjson["consumer_key_secret"]))
 
     return t
 
+
+"""
+token:Twitter OAuthed object
+temp_since_id:search tweet from temp_since_id
+"""
 def search_recent_tweet(token, query, temp_since_id):
     apiresults = token.search.tweets(q=query, 
-                                 lang="ja", 
-                                 since_id = temp_since_id, 
-                                 result_type="recent", 
-                                 count=100)
+                                     lang="ja", 
+                                     since_id = temp_since_id, 
+                                     result_type="recent", 
+                                     count=100)
 
     return apiresults
 
 
+"""
+filename:save filename
+apiresults:tweet search data
+"""
 def write_csv(filename, apiresults):
     f_csv = open("./{}.csv".format(filename), 'a')
     f_json = open("./{}.json".format(filename), 'a')
