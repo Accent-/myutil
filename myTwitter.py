@@ -36,6 +36,7 @@ def search_recent_tweet(token, query, temp_since_id):
 """
 filename:save filename
 apiresults:tweet search data
+csv outputs timestamp, twitter id, tweet text.
 """
 def write_csv(filename, apiresults):
     f_csv = open("./{}.csv".format(filename), 'a')
